@@ -1,9 +1,7 @@
 ﻿#if !NETCORE
 using DbUp.Builder;
 using DbUp.Engine;
-using DbUp.Engine.Output;
 using DbUp.Tests.TestInfrastructure;
-using NUnit.Framework;
 using Shouldly;
 using TestStack.BDDfy;
 using Xunit;
@@ -101,6 +99,7 @@ namespace DbUp.Tests
             {
                 b.WithScrubber(Scrubbers.ScrubDates);
                 b.LocateTestMethodUsingAttribute<FactAttribute>();
+                b.SubFolder("ApprovalFiles");
             });
         }
 
@@ -110,6 +109,7 @@ namespace DbUp.Tests
             {
                 b.WithScrubber(Scrubbers.ScrubDates);
                 b.LocateTestMethodUsingAttribute<FactAttribute>();
+                b.SubFolder("ApprovalFiles");
             });
         }
 
@@ -119,6 +119,7 @@ namespace DbUp.Tests
             {
                 b.WithScrubber(Scrubbers.ScrubDates);
                 b.LocateTestMethodUsingAttribute<FactAttribute>();
+                b.SubFolder("ApprovalFiles");
             });
         }
 
@@ -128,6 +129,7 @@ namespace DbUp.Tests
             {
                 b.WithScrubber(Scrubbers.ScrubDates);
                 b.LocateTestMethodUsingAttribute<FactAttribute>();
+                b.SubFolder("ApprovalFiles");
             });
         }
 
@@ -137,12 +139,13 @@ namespace DbUp.Tests
             {
                 b.WithScrubber(Scrubbers.ScrubDates);
                 b.LocateTestMethodUsingAttribute<FactAttribute>();
+                b.SubFolder("ApprovalFiles");
             });
         }
 
         void DbUpSetupToUseSingleTransaction()
         {
-            testConnection = new RecordingDbConnection(logger, false, "SchemaVersions");
+            testConnection = new RecordingDbConnection(logger, "SchemaVersions");
             upgradeEngineBuilder = DeployChanges.To
                 .TestDatabase(testConnection)
                 .JournalToSqlTable("dbo", "SchemaVersions")
@@ -151,7 +154,7 @@ namespace DbUp.Tests
 
         void DbUpSetupToNotUseTransactions()
         {
-            testConnection = new RecordingDbConnection(logger, false, "SchemaVersions");
+            testConnection = new RecordingDbConnection(logger, "SchemaVersions");
             upgradeEngineBuilder = DeployChanges.To
                 .TestDatabase(testConnection)
                 .JournalToSqlTable("dbo", "SchemaVersions")
@@ -160,7 +163,7 @@ namespace DbUp.Tests
 
         void DbUpSetupToUseTransactionPerScript()
         {
-            testConnection = new RecordingDbConnection(logger, false, "SchemaVersions");
+            testConnection = new RecordingDbConnection(logger, "SchemaVersions");
             upgradeEngineBuilder = DeployChanges.To
                 .TestDatabase(testConnection)
                 .JournalToSqlTable("dbo", "SchemaVersions")
